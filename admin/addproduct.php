@@ -5,11 +5,8 @@
 ﻿<?php include '../classes/product.php'; ?>
 <?php 
 $product= new product();
-if ($_SERVER['REQUEST_METHOD']=='POST'){
-  
-    $cat_name =$_POST['cat_name'];
-   
-    $insert_cat=$cat->add_cat($cat_name);
+if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST)=='submit'){
+  $insert_product=$product->add_product($_POST,$_FILES);
 }
 ?>
 <?php
@@ -21,7 +18,10 @@ $brand_all=$brand->get_all_brand();
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Add New Product</h2>
-        <div class="block">               
+        <div class="block">    
+           <?php if (isset($insert_product)){
+               echo $insert_product;
+           }?> 
             <form action="" method="post" enctype="multipart/form-data">
                 <table class="form">
 
@@ -30,7 +30,7 @@ $brand_all=$brand->get_all_brand();
                             <label>Name</label>
                         </td>
                         <td>
-                            <input type="text" placeholder="Enter Product Name..." class="medium" name="product_id"/>
+                            <input type="text" placeholder="Enter Product Name..." class="medium" name="product_name"/>
                         </td>
                     </tr>
                     <tr>
@@ -38,12 +38,12 @@ $brand_all=$brand->get_all_brand();
                             <label>Category</label>
                         </td>
                         <td>
-                            <select id="cat_id" name="select">
+                            <select id="cat_id" name="cat_id">
                                 <?php
                                 if ($category_all) {
                                     while ($result = $category_all->fetch_assoc()) {
                                         ?>
-                                        <option>Select Category</option>
+                                        
                                         <option value="<?php echo $result['cat_id'] ?>"><?php echo $result['cat_name'] ?></option>
                                     <?php }
                                 }
@@ -56,13 +56,13 @@ $brand_all=$brand->get_all_brand();
                             <label>Brand</label>
                         </td>
                         <td>
-                            <select id="brand_id" name="select">
-                                <option>Select Brand</option>
+                            <select id="brand_id" name="brand_id">
+                               
                                 <?php
                                 if ($brand_all) {
                                     while ($result = $brand_all->fetch_assoc()) {
                                         ?>
-                                        <option>Select Category</option>
+                                     
                                         <option value="<?php echo $result['brand_id'] ?>"><?php echo $result['brand_name'] ?></option>
                                     <?php }
                                 }
@@ -76,7 +76,9 @@ $brand_all=$brand->get_all_brand();
                             <label>Description</label>
                         </td>
                         <td>
-                            <textarea class="tinymce" name="product_des"></textarea>
+                            <textarea class="tinymce" name="product_des">
+                                
+                            </textarea>
                         </td>
                     </tr>
                     <tr>
