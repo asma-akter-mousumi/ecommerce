@@ -1,13 +1,21 @@
+
 <?php
  include_once 'lib/session.php';
 
  Session::checkSession();
+ include '../helper/format.php';
 
-  header("Cache-Control: no-cache, must-revalidate");
-  header("Pragma: no-cache"); 
-  header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); 
-  header("Cache-Control: max-age=2592000");
+include '../lib/database.php';
+spl_autoload_register(function ($class){
+
+include_once "../classes/".$class.".php";
+});
+$db=new Database();
+$fm=new Format();
+$cart=new cart();
+$user=new product();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>

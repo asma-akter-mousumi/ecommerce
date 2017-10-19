@@ -1,10 +1,20 @@
 <?php include_once 'inc/header.php';?>
   <div class="wrap">
 	<?php include_once 'inc/menu.php'; ?>
+      <?php
+      if ($_SERVER['REQUEST_METHOD']=='POST'){
+  
+    $quantity =$_POST['quantity'];
+    $cart_id =$_POST['cart_id'];
+    
+ $cart_update=$cart->update_cart($quantity,$cart_id );
+}
+      ?>
  <div class="main">
     <div class="content">
     	<div class="cartoption">		
 			<div class="cartpage">
+                            <span style="color:green;font-size: 18px;"><?php echo isset($cart_update)?$cart_update:"" ?></span>
 			    	<h2>Your Cart</h2>
 						<table class="tblone">
 							<tr>
@@ -15,88 +25,47 @@
 								<th width="20%">Total Price</th>
 								<th width="10%">Action</th>
 							</tr>
+                                                        <?php $get_product=$cart->get_cart_product();
+                                                        if($get_product){
+                                                            $sum=0;
+                    while ($result=$get_product->fetch_assoc()){   
+                                    ?>
+                                                       
 							<tr>
-								<td>Product Title</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
-								<td>Tk. 20000</td>
+                                                            <td><?php echo isset($result['product_name'])?$result['product_name']:""?></td>
+								<td><img src="admin/<?php echo isset($result['product_image'])?$result['product_image']:""?>" alt="" /></td>
+								<td><?php echo isset($result['product_price'])?$result['product_price']:""?></td>
 								<td>
-									<form action="" method="post">
-										<input type="number" name="" value="1"/>
+									<form action="" method="POST">
+                                                                            <input type="hidden" name="cart_id" value="<?php echo isset($result['cart_id'])?$result['cart_id']:""?>"/>
+								
+                                                                            <input type="number" name="quantity" value="<?php echo isset($result['product_qunatity'])?$result['product_qunatity']:""?>"/>
 										<input type="submit" name="submit" value="Update"/>
 									</form>
 								</td>
-								<td>Tk. 40000</td>
+								<td><?php $total=$result['product_price']*$result['product_qunatity'];echo $total;?></td>
 								<td><a href="">X</a></td>
 							</tr>
-							
-							<tr>
-								<td>Product Title</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
-								<td>Tk. 20000</td>
-								<td>
-									<form action="" method="post">
-										<input type="number" name="" value="1"/>
-										<input type="submit" name="submit" value="Update"/>
-									</form>
-								</td>
-								<td>Tk. 40000</td>
-								<td><a href="">X</a></td>
-							</tr>
-							
-							<tr>
-								<td>Product Title</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
-								<td>Tk. 20000</td>
-								<td>
-									<form action="" method="post">
-										<input type="number" name="" value="1"/>
-										<input type="submit" name="submit" value="Update"/>
-									</form>
-								</td>
-								<td>Tk. 40000</td>
-								<td><a href="">X</a></td>
-							</tr>
-							<tr>
-								<td>Product Title</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
-								<td>Tk. 20000</td>
-								<td>
-									<form action="" method="post">
-										<input type="number" name="" value="1"/>
-										<input type="submit" name="submit" value="Update"/>
-									</form>
-								</td>
-								<td>Tk. 40000</td>
-								<td><a href="">X</a></td>
-							</tr>
-							
-							<tr>
-								<td>Product Title</td>
-								<td><img src="images/new-pic3.jpg" alt=""/></td>
-								<td>Tk. 20000</td>
-								<td>
-									<form action="" method="post">
-										<input type="number" name="" value="1"/>
-										<input type="submit" name="submit" value="Update"/>
-									</form>
-								</td>
-								<td>Tk. 40000</td>
-								<td><a href="">X</a></td>
-							</tr>
-							
+                                                       <?php  $sum=$sum+$total;?>
+                                                        <?php }}?>
 						</table>
 						<table style="float:right;text-align:left;" width="40%">
 							<tr>
 								<th>Sub Total : </th>
-								<td>TK. 210000</td>
+								<td><?php echo  isset($sum)?$sum:""?></td>
 							</tr>
 							<tr>
 								<th>VAT : </th>
-								<td>TK. 31500</td>
+								<td>10%</td>
 							</tr>
 							<tr>
 								<th>Grand Total :</th>
-								<td>TK. 241500 </td>
+								<td>
+                                                                    <?php 
+                                                               $vat=$sum *0.1;
+                                                                $grand_total=$sum+$vat;
+                                                                echo $grand_total;
+                                                                ?> </td>
 							</tr>
 					   </table>
 					</div>

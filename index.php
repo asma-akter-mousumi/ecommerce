@@ -1,6 +1,7 @@
 <?php include_once 'inc/header.php';?>
   <div class="wrap">
 	<?php include_once 'inc/menu.php'; ?>
+      <?php echo session_id();?>
 	<div class="header_bottom">
 		<div class="header_bottom_left">
 			<div class="section group">
@@ -75,36 +76,23 @@
     		</div>
     		<div class="clear"></div>
     	</div>
+        
 	      <div class="section group">
+                  <?php $getfeature_poduct=$product->get_feature_product();
+                if($getfeature_poduct){
+                    while ($result=$getfeature_poduct->fetch_assoc()){   
+                
+                ?>
 				<div class="grid_1_of_4 images_1_of_4">
-					 <a href="preview.html"><img src="images/feature-pic1.png" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-					 <p><span class="price">$505.22</span></p>
-				     <div class="button"><span><a href="preview.html" class="details">Details</a></span></div>
+                                    <a href="details.php?product_id=<?php echo $result['product_id'] ?>"><img src="admin/<?php echo isset($result['product_image'])?$result['product_image']:""?>" alt="" /></a>
+					 <h2><?php echo $result['product_name'] ?> </h2>
+					 <p><?php echo $fm->textShorten($result['product_des'],10) ?></p>
+					 <p><span class="price"><?php echo $result['product_price'] ?></span></p>
+				     <div class="button"><span><a href="details.php?product_id=<?php echo $result['product_id'] ?>">Details</a></span></div>
 				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="preview.html"><img src="images/feature-pic2.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-					 <p><span class="price">$620.87</span></p>   
-				     <div class="button"><span><a href="preview.php" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="preview.php"><img src="images/feature-pic3.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-					 <p><span class="price">$220.97</span></p> 
-				     <div class="button"><span><a href="preview.php" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<img src="images/feature-pic4.png" alt="" />
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-					 <p><span class="price">$415.54</span></p>  
-				     <div class="button"><span><a href="preview.php" class="details">Details</a></span></div>
-				</div>
+			  <?php }}?>
 			</div>
+              
 			<div class="content_bottom">
     		<div class="heading">
     		<h3>New Products</h3>
@@ -112,31 +100,22 @@
     		<div class="clear"></div>
     	</div>
 			<div class="section group">
+                             <?php $getnew_poduct=$product->get_new_product();
+                if($getnew_poduct){
+                    while ($result=$getnew_poduct->fetch_assoc()){   
+                
+                ?>
 				<div class="grid_1_of_4 images_1_of_4">
-					 <a href="preview.php"><img src="images/new-pic1.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p><span class="price">$403.66</span></p>
-				     <div class="button"><span><a href="preview.php" class="details">Details</a></span></div>
+					  <a href="details.php?product_id=<?php echo $result['product_id'] ?>"><img src="admin/<?php echo isset($result['product_image'])?$result['product_image']:""?>" alt="" /></a>
+				
+					<h2><?php echo $result['product_name'] ?> </h2>
+					 <p><span class="price"><?php echo $result['product_price'] ?></span></p>
+				       <div class="button"><span><a href="details.php?product_id=<?php echo $result['product_id'] ?>">Details</a></span></div>
+			
 				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="preview.php"><img src="images/new-pic2.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p><span class="price">$621.75</span></p> 
-				     <div class="button"><span><a href="preview.php" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="preview.php"><img src="images/feature-pic2.jpg" alt="" /></a>
-					 <h2>Lorem Ipsum is simply </h2>
-					 <p><span class="price">$428.02</span></p>
-				     <div class="button"><span><a href="preview.php" class="details">Details</a></span></div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-				 <img src="images/new-pic3.jpg" alt="" />
-					 <h2>Lorem Ipsum is simply </h2>					 
-					 <p><span class="price">$457.88</span></p>
-
-				     <div class="button"><span><a href="preview.php" class="details">Details</a></span></div>
-				</div>
+				  <?php }}?>
+				
+				
 			</div>
     </div>
  </div>

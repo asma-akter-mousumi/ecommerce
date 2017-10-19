@@ -1,9 +1,9 @@
-<?php
- include_once 'lib/session.php';
+<?php/*
+ include_once '../lib/session.php';
   include_once '../helper/format.php';
  Session::checkLogin();
- include_once 'lib/database.php';
-/* 
+ include_once '../lib/database.php';
+ 
  * For Admin Login
  */
  class AdminLogin{
