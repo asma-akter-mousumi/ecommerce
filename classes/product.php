@@ -120,6 +120,12 @@ class product {
                 return $msg;}
             
     }
+    public function get_pro_cat($id){
+          $query = "select * from product where cat_id='$id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
     public function get_feature_product(){
        $query = "select * from product where product_type='0' order by product_id desc limit 4";
         $result = $this->db->select($query);
@@ -133,6 +139,26 @@ class product {
     public function get_product_by_id($id){
          $query = "select p.*,c.cat_name,b.brand_name from product as p ,category as c,brand as b  where "
                  . "p.cat_id=c.cat_id and p.brand_id=b.brand_id and p.product_id='$id'";
+          $result = $this->db->select($query);
+        return $result;
+    }
+    public function latestiphone(){
+        $query="select * from product where brand_id='4' order by product_id desc limit 1";
+          $result = $this->db->select($query);
+        return $result;
+    }
+       public function latestsamsong(){
+        $query="select * from product where brand_id='2' order by product_id desc limit 1";
+          $result = $this->db->select($query);
+        return $result;
+    }
+       public function latestacer(){
+        $query="select * from product where brand_id='1' order by product_id desc limit 1";
+          $result = $this->db->select($query);
+        return $result;
+    }
+       public function latestcanon(){
+        $query="select * from product where brand_id='3' order by product_id desc limit 1";
           $result = $this->db->select($query);
         return $result;
     }

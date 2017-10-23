@@ -64,7 +64,7 @@ class cart {
                 set product_qunatity='$quantity' where cart_id=$cart_id";
         $updated_row = $this->db->update($query);
         if ($updated_row) {
-            $msg = "<span class='success'> Quantity  Updated Successfully</span>";
+            header("Location:cart.php");
             return $msg;
         } else {
             $msg = "<span class='error'> <Quantity Not Updated Successfully</span>";
@@ -76,8 +76,8 @@ class cart {
         $query = "delete from cart where cart_id='$id'";
         $deleted_row = $this->db->delete($query);
         if ($deleted_row) {
-            $msg = "<span class='success'> cart Deleted  Successfully</span>";
-            return $msg;
+            header("Location:cart.php");
+           
         } else {
             $msg = "<span class='error'> cart not Deleted  Successfully</span>";
             return $msg;
@@ -88,5 +88,10 @@ class cart {
         $result = $this->db->select($query);
         return $result;  
     }
-
+    public function del_cus_cart(){
+        $sid=  session_id();
+         $query="delete from cart where session_id='$sid'";
+          $cart = $this->db->delete($query);
+          return $cart;
+    }
 }

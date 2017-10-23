@@ -20,7 +20,7 @@
         $del = $cart->delete_cart_product($id);
     }
     if (!isset($_GET['id'])){
-        echo "<meta http-equiv='refresh' content="30";
+        echo "<meta http-equiv='refresh' content='0;URL=?id=live'/>";
     }
     ?>
     <div class="main">
@@ -65,7 +65,7 @@
                                     <td><a href="cart.php?delpro=<?php echo isset($result['cart_id']) ? $result['cart_id'] : "" ?>" onclick="return confirm('Are You Sure to delete')">X</a></td>
                                 </tr>
                                 <?php $sum = $sum + $total; 
- Session::set("sum", $sum);
+
                                 
                                 ?>
                             <?php
@@ -92,6 +92,7 @@
                                 $vat = $sum * 0.1;
                                 $grand_total = $sum + $vat;
                                 echo $grand_total;
+                                 Session::set("sum", $grand_total);
                                 ?> </td>
                         </tr>
                     </table>

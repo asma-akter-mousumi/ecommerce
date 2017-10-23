@@ -11,8 +11,10 @@ include_once "classes/".$class.".php";
 });
 $db=new Database();
 $product=new product();
+$category=new category();
 $fm=new Format();
 $cart=new cart();
+$customer=new customer();
 $user=new product();
 ?>
 
