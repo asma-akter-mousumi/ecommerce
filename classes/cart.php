@@ -94,4 +94,6 @@ class cart {
           $cart = $this->db->delete($query);
           return $cart;
     }
+   
+    
 }
