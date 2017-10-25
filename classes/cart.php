@@ -92,8 +92,35 @@ class cart {
         $sid=  session_id();
          $query="delete from cart where session_id='$sid'";
           $cart = $this->db->delete($query);
-          return $cart;
+          return  $cart;
     }
-   
+   public function orderdata($id){
+    $result=$this->get_cart_product();
+    while ($value=$result->fetch_assoc()){
+        
+        $product_id=$value['product_id'];
+        $product_name=$value['product_name'];
+        $product_price=$value['product_price']*$value['product_qunatity'];
+        $product_price=$product_price+$product_price*.1;
+        $product_qunatity=$value['product_qunatity'];
+        $product_image=$value['product_image'];
+        $query = "Insert into order_tbl(customer_id,product_id,quantity,product_name,product_price,image)"
+                . " values('$id','$product_id','$product_qunatity','$product_name','$product_price','$product_image')";
+            $insert_product = $this->db->insert($query);
+            if ($insert_product) {
+                header("Location:cart.php");
+            } else {
+                header("Location:404.php");
+            }
+    }
+}
+public function payableammnt($id){
+    echo session_id();
+     $query = "select * from order_tbl where customer_id='$id' order by order_date desc";
+     echo $query;
+        $result = $this->db->select($query);
+        return $result; 
+    
+}
     
 }
