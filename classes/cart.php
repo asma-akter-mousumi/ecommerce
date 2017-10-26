@@ -122,5 +122,11 @@ public function payableammnt($id){
         return $result; 
     
 }
+public function get_order($id){
+ $query = "select * from order_tbl where customer_id='$id'";
+    
+        $result = $this->db->select($query);
+        return $result;    
+}
     
 }

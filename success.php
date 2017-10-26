@@ -38,7 +38,7 @@
                 <div class="success">
                     <h2>Success</h2>
      <p>Total Amount(Including Vat) :<?php echo $sum11;?></p>
-                    <p>Thanks for purchase we will contact with you soon Here Your Order details<a href="orderdetails.php">Visit here</a></p>
+                    <p>Thanks for purchase we will contact with you soon Here Your Order details<a href="order.php">Visit here</a></p>
                 </div>
               
             </div>
