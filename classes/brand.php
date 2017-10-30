@@ -1,11 +1,5 @@
 <?php
-/*
-include_once '../helper/format.php';
 
-include_once '../lib/database.php';
-
- * For category
- */
 
 class brand {
 

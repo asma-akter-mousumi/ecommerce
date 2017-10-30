@@ -7,6 +7,12 @@
     if ($login == FALSE) {
         header("Location:login.php");
     }
+    if (isset($_GET['shift_id'])) {
+        $shift_id = $_GET['shift_id'];
+        $price = $_GET['price'];
+        $time = $_GET['time'];
+        $shifted = $cart->product_shifted_con($shift_id, $price, $time);
+    }
     ?>
     <div class="main">
         <div class="content">
@@ -43,31 +49,41 @@
                                     <td><?php
                                         if ($result['status'] == 0) {
                                             echo "Pending";
-                                        } else {
+                                        } elseif ($result['status'] == 1) {
                                             echo "Shifted";
+                                        } else {
+                                            echo "OK";
                                         }
-     
-                                        ?></td>
-                                    
-                                         <td>
-                                              <?php
-                                        if ($result['status'] == 0) {?>
-                                        
-                                             <a href="cart.php?delpro=<?php echo isset($result['id']) ? $result['id'] : "" ?>" onclick="return confirm('Are You Sure to delete')">X</a>
-                                            <?php   }
- else {echo "N/A";}?>
-                                             
-                                         </td>
-               
-                                 
-                                                     </tr>
+                                        ?>
 
-                                <?php
-                            }
-                        } else {
-                            header("Location:index.php");
-                        }
-                        ?>
+
+                                    </td>
+
+                                    <td>
+                                        <?php if ($result['status'] == 1) { ?>
+                                            <a href="?shift_id=<?php echo $result['customer_id'] ?>&price=<?php echo $result['product_price'] ?>&time=<?php echo $result['order_date'] ?>">Confirm</a> 
+
+                                        <?php
+                                        } elseif ($result['status'] == 2) {
+                                            echo "OK";
+                                        } elseif ($result['status'] == 0) {
+                                            echo "N/A";
+                                        }
+                                        ?>
+
+
+
+                                    </td>
+
+
+                                </tr>
+
+        <?php
+    }
+} else {
+    header("Location:index.php");
+}
+?>
                     </table>
 
                 </div>

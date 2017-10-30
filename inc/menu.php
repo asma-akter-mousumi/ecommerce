@@ -47,6 +47,7 @@
 <?php if (isset($_GET['cid'])){
     $delpro=$cart->del_cus_cart();
      Session::destroy();
+
 } ?>
 
         <div class="clear"></div>
@@ -59,8 +60,15 @@
         <li><a href="products.php">Products</a> </li>
         <li><a href="topbrands.php">Top Brands</a></li>
         <?php 
+              $login=Session::get("customer");
+      echo $login;
+      $chkorder=$cart->get_order($login);
+        if(isset($chkorder)&& $login){?>
+        <li><a href="order.php">Order Details</a></li>
+        <?php 
+        }
         $ckcart=$cart->get_cart_product();
-        $login=Session::get("customer");
+       
         if($login){
             ?>
          <li><a href="profile.php">Profile</a></li>
@@ -76,6 +84,7 @@
         ?>
        
         <li><a href="contact.php">Contact</a> </li>
+          <li><a href="compare.php">Compare</a> </li>
         <div class="clear"></div>
     </ul>
 </div>

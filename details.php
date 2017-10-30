@@ -42,6 +42,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 					</form>	
                                     </br> <span style="color: red;font-size: 20px;"><?php echo isset($addToCart)?$addToCart:"";?></span>
 				</div>
+                                        <div class="add-cart">
+                                            <a href="?campare=<?php echo $result['product_id'] ?>" class="buysubmit">Compare</a>
+                                            <a href="?wishlist=<?php echo $result['product_id'] ?>" class="buysubmit">Save to list</a>
+                                    		</div>
 			</div>
 			<div class="product-desc">
 			<h2>Product Details</h2>

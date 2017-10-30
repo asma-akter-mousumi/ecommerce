@@ -1,6 +1,7 @@
 
-<?php include_once '../classes/admin_login.php';
-$al=new AdminLogin();
+<?php include_once '../classes/admin.php';
+$al=new admin();
+
 
 if ($_SERVER['REQUEST_METHOD']=='POST'){
   

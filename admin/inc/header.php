@@ -1,6 +1,6 @@
 
 <?php
- include_once 'lib/session.php';
+ include_once '../lib/session.php';
 
  Session::checkSession();
  include '../helper/format.php';

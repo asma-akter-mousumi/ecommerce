@@ -128,5 +128,70 @@ public function get_order($id){
         $result = $this->db->select($query);
         return $result;    
 }
+public function getAllorderProduct(){
+    $query = "select * from order_tbl order by order_date";
     
+        $result = $this->db->select($query);
+        return $result;   
+    
+}
+public function product_shifted($id,$price,$date){
+     $id = $this->fm->validation($id);
+        $price = $this->fm->validation($price);
+            $date = $this->fm->validation($date);
+             $id = mysqli_real_escape_string($this->db->link, $id);
+               $price = mysqli_real_escape_string($this->db->link, $price);
+        $date = mysqli_real_escape_string($this->db->link, $date);
+ 
+
+
+        $query = "update order_tbl 
+                set status='1' where customer_id='$id' and product_price='$price' and order_date='$date'";
+        $updated_row = $this->db->update($query);
+        if ($updated_row) {
+           $msg = "<span class='success'> Updated Successfully</span>";
+            return $msg;
+        } else {
+            $msg = "<span class='error'> Not Updated Successfully</span>";
+            return $msg;
+        }
+}
+public function product_shifted_del($id,$price,$date){
+    $id = mysqli_real_escape_string($this->db->link, $id);
+               $price = mysqli_real_escape_string($this->db->link, $price);
+        $date = mysqli_real_escape_string($this->db->link, $date);
+ 
+
+  $query="delete from order_tbl where order_date='$date' and customer_id='$id' and product_price='$price'";
+          $deldata = $this->db->delete($query);
+          if($deldata){
+           $msg = "<span class='success'> Deleted Successfully</span>";
+            return $msg;   
+          }
+ else {
+     $msg = "<span class='success'> not delete</span>";
+            return $msg;
+ }
+}
+public function product_shifted_con($id,$price,$date){
+  $id = $this->fm->validation($id);
+        $price = $this->fm->validation($price);
+            $date = $this->fm->validation($date);
+             $id = mysqli_real_escape_string($this->db->link, $id);
+               $price = mysqli_real_escape_string($this->db->link, $price);
+        $date = mysqli_real_escape_string($this->db->link, $date);
+ 
+
+
+        $query = "update order_tbl 
+                set status='2' where customer_id='$id' and product_price='$price' and order_date='$date'";
+        $updated_row = $this->db->update($query);
+        if ($updated_row) {
+           $msg = "<span class='success'> Updated Successfully</span>";
+            return $msg;
+        } else {
+            $msg = "<span class='error'> Not Updated Successfully</span>";
+            return $msg;
+        }  
+}
 }
