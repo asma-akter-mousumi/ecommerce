@@ -1,7 +1,12 @@
 <?php include_once 'inc/header.php'; ?>
 <div class="wrap">
     <?php include_once 'inc/menu.php'; ?>
-
+    <style>
+        table.tblone img{
+            height: 100px;
+            width: 100px;
+        }
+    </style>
   
     <div class="main">
         <div class="content">
@@ -11,78 +16,38 @@
                     <h2>Compare</h2>
                     <table class="tblone">
                         <tr>
-                            <th width="20%">Product Name</th>
-                            <th width="10%">Image</th>
-                            <th width="15%">Price</th>
-                            <th width="25%">Quantity</th>
-                            <th width="20%">Total Price</th>
-                            <th width="10%">Action</th>
+                            <th>Product Name</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                       
+                            <th >Action</th>
                         </tr>
                         <?php
-                        $get_product = $cart->get_cart_product();
+                          $cus=Session::get("customer");
+                        $get_product = $cart->get_comp_product($cus);
                         if ($get_product) {
-                            $sum = 0;
+                           
                             while ($result = $get_product->fetch_assoc()) {
                                 ?>
-
-                                <tr>
-                                    <td><?php echo isset($result['product_name']) ? $result['product_name'] : "" ?></td>
-                                    <td><img src="admin/<?php echo isset($result['product_image']) ? $result['product_image'] : "" ?>" alt="" /></td>
-                                    <td><?php echo isset($result['product_price']) ? $result['product_price'] : "" ?></td>
-                                    <td>
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="cart_id" value="<?php echo isset($result['cart_id']) ? $result['cart_id'] : "" ?>"/>
-
-                                            <input type="number" name="quantity" value="<?php echo isset($result['product_qunatity']) ? $result['product_qunatity'] : "" ?>"/>
-                                            <input type="submit" name="submit" value="Update"/>
-                                        </form>
-                                    </td>
-                                    <td><?php
-                                        $total = $result['product_price'] * $result['product_qunatity'];
-                                        echo $total;
-                                        ?></td>
-                                    <td><a href="cart.php?delpro=<?php echo isset($result['cart_id']) ? $result['cart_id'] : "" ?>" onclick="return confirm('Are You Sure to delete')">X</a></td>
-                                </tr>
-                                <?php $sum = $sum + $total; 
-
+                        <tr>
+                             <td><?php echo isset($result['product_name']) ? $result['product_name'] : "" ?></td>
+                             <td><img src="admin/<?php echo isset($result['image']) ? $result['image'] : "" ?>" height="300px" width="300px" /></td>
+                                    <td><?php echo isset($result['price']) ? $result['price'] : "" ?></td>
+                                    <td> <a href="details.php?product_id=<?php echo $result['product_id']?>">Veiw</a></td>
+                                    
+                                             </tr>
                                 
-                                ?>
-                            <?php
-                            }
-                        }
- else {
-                            header("Location:index.php");
- }
-                        ?>
+                         <?php   }
+                        }?>
+
                     </table>
-                    <table style="float:right;text-align:left;" width="40%">
-                        <tr>
-                            <th>Sub Total : </th>
-                            <td><?php echo isset($sum) ? $sum : "" ?></td>
-                        </tr>
-                        <tr>
-                            <th>VAT : </th>
-                            <td>10%</td>
-                        </tr>
-                        <tr>
-                            <th>Grand Total :</th>
-                            <td>
-                                <?php
-                                $vat = $sum * 0.1;
-                                $grand_total = $sum + $vat;
-                                echo $grand_total;
-                                 Session::set("sum", $grand_total);
-                                ?> </td>
-                        </tr>
-                    </table>
+                  
                 </div>
                 <div class="shopping">
                     <div class="shopleft">
                         <a href="index.php"> <img src="images/shop.png" alt="" /></a>
                     </div>
-                    <div class="shopright">
-                        <a href="payment.php"> <img src="images/check.png" alt="" /></a>
-                    </div>
+                  
                 </div>
             </div>  	
             <div class="clear"></div>

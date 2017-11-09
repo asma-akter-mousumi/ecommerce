@@ -84,7 +84,9 @@
         ?>
        
         <li><a href="contact.php">Contact</a> </li>
+         <?php if($login){?>
           <li><a href="compare.php">Compare</a> </li>
+         <?php }?>
         <div class="clear"></div>
     </ul>
 </div>

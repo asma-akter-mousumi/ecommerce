@@ -53,6 +53,9 @@ body{
 	position:relative;
 	width:47%;
 }
+.error{
+    color: red;
+}
 .search_box input[type="text"]{
 	width:74%;
 	padding:9px 8px;

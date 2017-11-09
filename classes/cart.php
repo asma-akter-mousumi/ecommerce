@@ -194,4 +194,11 @@ public function product_shifted_con($id,$price,$date){
             return $msg;
         }  
 }
+public function get_comp_product($cus){
+     $id = mysqli_real_escape_string($this->db->link, $cus);
+      $query = "select * from compare where customer_id='$id' order by product_id desc";
+     
+        $result = $this->db->select($query);
+        return $result; 
+}
 }
