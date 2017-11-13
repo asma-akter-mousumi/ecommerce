@@ -37,18 +37,21 @@
             ?>
             <div class="login">
                 <a href="login.php">Login</a> </div>
+        <?php } else {
+            ?>
+            <div class="login">
+                <a href="?cid=<?php Session::get('customer') ?>">Logout</a> 
+            </div>
         <?php }
- else {?>
-       <div class="login">
-           <a href="?cid=<?php Session::get('customer') ?>">Logout</a> 
-       </div>
- <?php }
         ?>
-<?php if (isset($_GET['cid'])){
-    $delpro=$cart->del_cus_cart();
-     Session::destroy();
-
-} ?>
+        <?php
+        if (isset($_GET['cid'])) {
+              $login = Session::get("customer");
+            $delpro = $cart->del_cus_cart();
+            $delcom=$product->delcom($login);
+            Session::destroy();
+        }
+        ?>
 
         <div class="clear"></div>
     </div>
@@ -59,34 +62,49 @@
         <li><a href="index.php">Home</a></li>
         <li><a href="products.php">Products</a> </li>
         <li><a href="topbrands.php">Top Brands</a></li>
-        <?php 
-              $login=Session::get("customer");
-      echo $login;
-      $chkorder=$cart->get_order($login);
-        if(isset($chkorder)&& $login){?>
-        <li><a href="order.php">Order Details</a></li>
-        <?php 
-        }
-        $ckcart=$cart->get_cart_product();
-       
-        if($login){
-            ?>
-         <li><a href="profile.php">Profile</a></li>
-        <?php
-        }
+         <?php
+         $login = Session::get("customer");
+        $get_product_wish = $product->get_wish_product($login);
+      
         
-        if($ckcart){
+        if ($get_product_wish) {
             ?>
-      <li><a href="cart.php">Cart</a></li>
-       <li><a href="payment.php">Payment</a></li>
+            <li><a href="wishlist.php">Wish List</a> </li>
+<?php } ?>
         <?php
+        $login = Session::get("customer");
+        
+        $chkorder = $cart->get_order($login);
+        if (isset($chkorder) && $login) {
+            ?>
+            <li><a href="order.php">Order Details</a></li>
+            <?php
+        }
+        $ckcart = $cart->get_cart_product();
+
+        if ($login) {
+            ?>
+            <li><a href="profile.php">Profile</a></li>
+            <?php
+        }
+
+        if ($ckcart) {
+            ?>
+            <li><a href="cart.php">Cart</a></li>
+            <li><a href="payment.php">Payment</a></li>
+            <?php
         }
         ?>
-       
+
         <li><a href="contact.php">Contact</a> </li>
-         <?php if($login){?>
-          <li><a href="compare.php">Compare</a> </li>
-         <?php }?>
+        <?php
+        $cus = Session::get("customer");
+        $get_product = $cart->get_comp_product($cus);
+        if ($get_product) {
+            ?>
+            <li><a href="compare.php">Compare</a> </li>
+<?php } ?>
+               
         <div class="clear"></div>
     </ul>
 </div>

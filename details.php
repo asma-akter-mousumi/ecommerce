@@ -21,10 +21,25 @@
         $insert_compare = $product->inserdata($customeid,$productid);
         
     }
+    
+     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wlist'])) {
+
+
+        
+        $customeid = Session::get('customer');
+       
+        $save = $product->savewishlist($id,$customeid);
+        
+    }
     ?>
     <style>
         .error{
             color: red;
+        }
+        .my_button{
+            width: 100px;
+            float: left;
+            margin-right: 50px;
         }
     </style>
     <div class="main">
@@ -51,6 +66,9 @@
                                   <?php if(isset($insert_compare)){
                         echo $insert_compare;
                     } ?>
+                                <?php if(isset($save)){
+                        echo $save;
+                    } ?>
                                 <div class="add-cart">
                                     <form action="" method="post">
                                         <input type="number" class="buyfield" name="quantity" value="1"/>
@@ -58,14 +76,24 @@
                                     </form>	
                                     </br> <span style="color: red;font-size: 20px;"><?php echo isset($addToCart) ? $addToCart : ""; ?></span>
                                 </div>
+                                <?php  $login=Session::get("customer");
+       if($login){?>
                                 <div class="add-cart">
+                                      <div class="my_button">
                                     <form action="" method="post">
                                         <input type="hidden" class="buysubmit" name="productid" value="<?php echo $result['product_id'] ?>"/>
                                         <input type="submit" class="buysubmit" name="compare" value="Add to compare"/>
-                                    </form>	
+                                    </form>
+                                      </div>
+                                    <div class="my_button">
+                                    <form action="" method="post">
+                                       
+                                        <input type="submit" class="buysubmit" name="wlist" value="Wish List"/>
+                                    </form>
+                                    </div>
                                     </br> <span style="color: red;font-size: 20px;"><?php echo isset($addToCart) ? $addToCart : ""; ?></span>
                                 </div>
-
+       <?php }?>
                             </div>
                             <div class="product-desc">
                                 <h2>Product Details</h2>

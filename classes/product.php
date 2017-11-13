@@ -207,5 +207,52 @@ class product {
         }
         }
     }
+    public function delcom($login){
+      $query = "delete from compare where customer_id='$login'";
+        $deleted_row = $this->db->delete($query);
+        
+    }
+    public function savewishlist($id,$customerid){
+        $query_cmp = "select * from wlist where cmrid='$customerid' and product_id='$id'";
+     // echo $query_cmp;
+       $result_cmp = $this->db->select($query_cmp);
+       if( $result_cmp){
+        $msg = "<span class='error'> Product  Already Added to Wish List </span>";
+            return $msg;    
+       }
+        $query="select * from product where product_id='$id'";
+        
+         $result=$this->db->select($query);
+    while ($value=$result->fetch_assoc()){
+        
+        $product_id=$value['product_id'];
+        $product_name=$value['product_name'];
+      
+        $product_price=$value['product_price'];
+ 
+        $product_image=$value['product_image'];
+        $query = "Insert into wlist(cmrid,product_id,product_name,product_price,product_image)"
+                . " values('$customerid','$product_id','$product_name','$product_price','$product_image')";
+            $insert_product = $this->db->insert($query);
+            if ($insert_product) {
+            $msg = "<span class='success'> Product Added to Wish List</span>";
+            return $msg;
+        } else {
+            $msg = "<span class='error'> Product not Added to Wish List</span>";
+            return $msg;
+        }
+    }
+    }
+    public function get_wish_product($cmrid){
+       $query="select * from wlist where cmrid='$cmrid'";
+        
+         $result=$this->db->select($query); 
+         return $result;
+    }
+    public function delete_wlist_product($cmrid,$id){
+     
+       $query = "delete from wlist where product_id='$id' and cmrid='$cmrid'";
 
+        $deleted_row = $this->db->delete($query); 
+    }
 }

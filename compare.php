@@ -1,4 +1,11 @@
-<?php include_once 'inc/header.php'; ?>
+<?php include_once 'inc/header.php'; 
+   $login=  Session::get('cus_login');
+    if($login==false){
+        header("Location:login.php");
+    }
+
+?>
+
 <div class="wrap">
     <?php include_once 'inc/menu.php'; ?>
     <style>
